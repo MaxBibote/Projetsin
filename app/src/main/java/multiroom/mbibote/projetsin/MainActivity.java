@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-            } 
+            }
         });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -80,13 +80,13 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_musiques) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_musiques) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_enceintes) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_parametre) {
 
         } else if (id == R.id.nav_share) {
 

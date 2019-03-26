@@ -5,29 +5,26 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:id="@+id/nav_musiques"
+            android:icon="@android:drawable/ic_media_play"
+            android:title="Bibliothèque" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:id="@+id/nav_enceintes"
+            android:icon="@android:drawable/ic_lock_silent_mode_off"
+            android:title="Fichiers" />
+
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_parametre"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:title="Paramètre" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Propiétés du serveur">
         <menu>
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:title="Profils" />
             <item
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"
