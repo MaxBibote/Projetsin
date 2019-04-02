@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -99,3 +100,10 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 }
+
+
+<activity
+  android:name="com.example.musicplayer.MainActivity"
+          android:label="@string/app_name"
+          android:launchMode="singleTop"
+          android:screenOrientation="portrait" >

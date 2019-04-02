@@ -1,5 +1,7 @@
 package multiroom.mbibote.projetsin;
 
+import android.content.res.ColorStateList;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
@@ -13,7 +15,7 @@ public class FanartActivity extends AppCompatActivity implements FanartManager.O
 
     private static final int FANART_SWITCH_TIME =12 * 1000;
 
-    private TextView mTracktitle;
+    private TextView mTrackTitle;
     private TextView mTrackAlbum;
     private TextView mTrackArtist;
 
@@ -132,14 +134,131 @@ public class FanartActivity extends AppCompatActivity implements FanartManager.O
     @Override
     protected void onResume() {
         super.onResume();
+
+
         MPDStateMonitoringHandler.getHandler().unregisterStatusListener(mStateListener);
         cancelSwitching();
         startSwitching();
+
+        mTrackTitle.setSelected(true);
+        mTrackArtist.setSelected(true);
+        mTrackAlbum.setSelected(true);
+
+        hideSystemUI();
+
+        setVolumeControlSetting();
+        }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        MDPSstateMonitoringHandler.getHandler().unregisterStatusListener(mStateListerner);
+        cancelSwitching();
     }
 
     @Override
-    protected
+    protected void onConnected() {
+        updateMPDStatus(MPDStateMonitoringHandler.getHandler().getLastStatus());
+    }
+
+    @Override
+    protected void onDisconnected(){
+        udapteMPDStatus(new MPDCurrentStatus());
+        udapteMPDCurrentTrack(new MPDTrack(""));
+    }
+
+    @Override
+    protected void onMPDError(MPDException.MPDServerException e) {
 
     }
 
+    @Override
+    protected void onMPDConnectionError(MPDException.MPDConnectionException e) {
+    }
 
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putInt(STATE_ARTWORK_POINTER, mCurrentFanart);
+        savedInstanceState.putInt(STATE_ARTWORK_POINTER_NEXT, mNextFanart);
+        savedInstanceState.putParcelable(STATE_LAST_TRACK, mLastTrack);
+
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        // Always call the superclass so it can restore the view hierarchy
+        super.onRestoreInstanceState(savedInstanceState);
+
+        // Restore state members from saved instance
+        mCurrentFanart = savedInstanceState.getInt(STATE_ARTWORK_POINTER);
+        mNextFanart = savedInstanceState.getInt(STATE_ARTWORK_POINTER_NEXT);
+        mLastTrack = savedInstanceState.getParcelable(STATE_LAST_TRACK);
+
+        restoreFanartView();
+    }
+
+    @Override
+    public void fanartInitialCacheCount(final int count) {
+        if (count > 0) {
+            mNextFanart = 0;
+            updateFanartViews();
+        }
+    }
+
+    @Override
+    public void fanartCacheCountChanged(final int count) {
+        if (count == 1) {
+            updateFanartViews();
+        }
+
+        if (mCurrentFanart == (count - 2)) {
+            mNextFanart = (mCurrentFanart + 1) % count;
+}
+
+
+
+
+
+        private void updateMPDStatus(MPDCurrentStatus status) {
+            MPDCurrentStatus.MPD_PLAYBACK_STATE state = status.getPlaybackState();
+
+            // update play buttons
+            switch (state) {
+                case MPD_PLAYING:
+                    mPlayPauseButton.setImageResource(R.drawable.ic_pause_circle_fill_48dp);
+                    break;
+                case MPD_PAUSING:
+                case MPD_STOPPED:
+                    mPlayPauseButton.setImageResource(R.drawable.ic_play_circle_fill_48dp);
+                    break;
+            }
+
+            // Update volume seekbar
+            int volume = status.getVolume();
+            mVolumeSeekbar.setProgress(volume);
+
+            if (volume >= 70) {
+                mVolumeIcon.setImageResource(R.drawable.ic_volume_high_black_48dp);
+                mVolumeIconButtons.setImageResource(R.drawable.ic_volume_high_black_48dp);
+            } else if (volume >= 30) {
+                mVolumeIcon.setImageResource(R.drawable.ic_volume_medium_black_48dp);
+                mVolumeIconButtons.setImageResource(R.drawable.ic_volume_medium_black_48dp);
+            } else if (volume > 0) {
+                mVolumeIcon.setImageResource(R.drawable.ic_volume_low_black_48dp);
+                mVolumeIconButtons.setImageResource(R.drawable.ic_volume_low_black_48dp);
+            } else {
+                mVolumeIcon.setImageResource(R.drawable.ic_volume_mute_black_48dp);
+                mVolumeIconButtons.setImageResource(R.drawable.ic_volume_mute_black_48dp);
+            }
+            mVolumeIcon.setImageTintList(ColorStateList.valueOf(ThemeUtils.getThemeColor(this, R.attr.malp_color_text_accent)));
+            mVolumeIconButtons.setImageTintList(ColorStateList.valueOf(ThemeUtils.getThemeColor(this, R.attr.malp_color_text_accent)));
+
+            mVolumeText.setText(String.valueOf(volume) + '%');
+
+            // Update position seekbar & textviews
+            mPositionSeekbar.setMax(status.getTrackLength());
+            mPositionSeekbar.setProgress(status.getElapsedTime());
+        }
