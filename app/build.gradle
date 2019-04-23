@@ -1,6 +1,22 @@
 apply plugin: 'com.android.application'
 
 android {
+    File keystorePropertiesFile = rootProject.file("keystore.properties")
+
+    signingConfigs {
+       config {
+           if (keystorePropertiesFile.exists()){
+
+               Properties keystoreProperties = new Properties()
+               keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+               keyAlias keystoreProperties['keyAlias']
+               keyPassword keystoreProperties['keyPassword']
+               storeFile file (keystoreProperties['storeFile'])
+               storePassword keystoreProperties ['storePassword']
+           }
+       }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "multiroom.mbibote.projetsin"
@@ -14,8 +30,20 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            if (keystorePropertiesFile.exists()){
+                signingConfigs signingConfigs.config
+            }
+        }
+        debug{
+            if (keystorePropertiesFile.exists()){
+                signingConfigs signingConfigs.config
+            }
         }
     }
+lintOptions{
+    abortOnError false
+}
+
 }
 
 dependencies {
@@ -28,3 +56,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
+
+
+

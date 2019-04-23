@@ -6,13 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="27dp">
+        android:orientation="vertical">
 
     <ViewSwitcher
         android:id="@+id/fanart_switcher"
@@ -28,7 +25,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            app:srcCompat="@android:color/holo_red_light" />
+            app:srcCompat="@android:color/holo_red_light"
+            android:contentDescription="TODO">
 
         <ImageView
             android:id="@+id/imageView4"
@@ -36,8 +34,6 @@
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             app:srcCompat="@android:color/darker_gray" />
-
-
 
 
 
@@ -56,11 +52,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="96dp"
         android:orientation="vertical"
         android:paddingTop="16dp"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="496dp">
+        tools:layout_editor_absoluteY="466dp">
 
 
         <TextView
@@ -121,11 +117,11 @@
     <LinearLayout
         android:id="@+id/control_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="167dp"
         android:orientation="vertical"
         android:padding="16dp"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="582dp">
+        tools:layout_editor_absoluteY="564dp">
 
         <LinearLayout
             android:id="@+id/volume_icon"
@@ -159,16 +155,112 @@
             android:paddingEnd="16dp">
 
             <ImageButton
-                android:id="@+id/imageButton"
+                android:id="@+id/imageButton-min"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginEnd="4dp"
-                android:
-                app:srcCompat="@android:drawable/button_onoff_indicator_on" />
+                android:background="@android:color/holo_red_light"
+                android:src="@drawable/ic_volume_low_black_48dp"
+                app:src="@dawable/ic_low_black_48dp.xml" />
+
+
+            <ImageView
+                android:id="@+id/volume_icon_buttons"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="4dp"
+                android:layout_witdh="32dp"
+                android:src="@drawable/ic_volume_high_black_48dp" />
+
+
+            <TextView
+                android:id="@+id/volume_buttons_text"
+                android:layout_width="48dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="4dp"
+                android:text="100%" />
+
+            <ImageButton
+                android:id="@+id/imageButton_plus"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_weight="4dp"
+                android:background="@android:color/holo_red_light"
+                android:src="@android:drawable/ic_input_add"
+                android:tint="@color/design_default_color_primary_dark" />
 
         </LinearLayout>
 
+        <LinearLayout
+            android.weightSum="4"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+
+            <ImageButton
+                android:id="@+id/imageButton_previous"
+                android:layout_width="0px"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:background="@android:color/holo_red_light"
+                android:scaleType="fitCenter"
+                android:src="@android:drawable/ic_media_previous"
+                android:contentDescription="TODO" />
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:background="@android:color/holo_red_light"
+                android:scaleType=""
+                android:src="@android:drawable/ic_media_pause" />
+
+            <ImageButton
+                android:id="@+id/imageButton_next"
+                android:layout_width="0px"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:background="@android:color/holo_red_light"
+                android:src="@android:drawable/ic_media_next"
+                android:scaleType="fitCenter"
+                />
+
+
+        </LinearLayout>
+
+
     </LinearLayout>
+
+        </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignTop="@+id/information_layout"
+        android:layout_marginTop="-24dp"
+        android:translationZ="3dp">>
+
+        <SeekBar
+            android:id="@+id/seekBar3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+                android:layout_marginLeft="-16.5dp"
+                android:layout_marginRight="-16.5dp" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/null"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="-263dp"
+        android:background="#6600000"
+        android:translationZ="1dp" />
+    </RelativeLayout>
 
 
 </android.support.constraint.ConstraintLayout>
